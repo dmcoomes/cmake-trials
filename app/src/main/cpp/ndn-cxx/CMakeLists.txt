@@ -1,0 +1,194 @@
+cmake_minimum_required (VERSION 3.4.1)
+#project (ndn-cxx)
+
+set(CMAKE_VERBOSE_MAKEFILE on)
+
+#add_definitions(-DNDEBUG -DBOOST_LOG_DYN_LINK)
+add_definitions(-DNDEBUG)
+
+set(CMAKE_CXX_FLAGS "-O2 -g -pedantic -Wall -Wextra -Wnon-virtual-dtor -Wno-unused-parameter -fdiagnostics-color -std=c++14")
+
+set(ndn-cxx_SOURCES
+    src/data.cpp
+    src/delegation-list.cpp
+    src/delegation.cpp
+    src/encoding/block-helpers.cpp
+    src/encoding/block.cpp
+    src/encoding/buffer-stream.cpp
+    src/encoding/buffer.cpp
+    src/encoding/encoder.cpp
+    src/encoding/estimator.cpp
+    src/encoding/nfd-constants.cpp
+    src/encoding/tlv.cpp
+    src/exclude.cpp
+    src/face.cpp
+    src/ims/in-memory-storage-entry.cpp
+    src/ims/in-memory-storage-fifo.cpp
+    src/ims/in-memory-storage-lfu.cpp
+    src/ims/in-memory-storage-lru.cpp
+    src/ims/in-memory-storage-persistent.cpp
+    src/ims/in-memory-storage.cpp
+    src/interest-filter.cpp
+    src/interest.cpp
+    src/key-locator.cpp
+    src/link.cpp
+    src/lp/cache-policy.cpp
+    src/lp/nack-header.cpp
+    src/lp/nack.cpp
+    src/lp/packet.cpp
+    src/lp/prefix-announcement.cpp
+    src/meta-info.cpp
+    src/mgmt/control-response.cpp
+    src/mgmt/dispatcher.cpp
+    src/mgmt/nfd/channel-status.cpp
+    src/mgmt/nfd/command-options.cpp
+    src/mgmt/nfd/control-command.cpp
+    src/mgmt/nfd/control-parameters.cpp
+    src/mgmt/nfd/controller.cpp
+    src/mgmt/nfd/cs-info.cpp
+    src/mgmt/nfd/face-event-notification.cpp
+    src/mgmt/nfd/face-monitor.cpp
+    src/mgmt/nfd/face-query-filter.cpp
+    src/mgmt/nfd/face-status.cpp
+    src/mgmt/nfd/fib-entry.cpp
+    src/mgmt/nfd/forwarder-status.cpp
+    src/mgmt/nfd/rib-entry.cpp
+    src/mgmt/nfd/status-dataset.cpp
+    src/mgmt/nfd/strategy-choice.cpp
+    src/mgmt/status-dataset-context.cpp
+    src/name-component.cpp
+    src/name.cpp
+    src/net/address-converter.cpp
+    src/net/detail/link-type-helper.cpp
+    src/net/detail/linux-if-constants.cpp
+    src/net/dns.cpp
+    src/net/ethernet.cpp
+    src/net/face-uri.cpp
+    src/net/network-address.cpp
+    src/net/network-interface.cpp
+    src/net/network-monitor-stub.cpp
+    src/net/network-monitor.cpp
+    src/packet-base.cpp
+    src/security/command-interest-signer.cpp
+    src/security/detail/openssl-helper.cpp
+    src/security/digest-sha256.cpp
+    src/security/key-params.cpp
+    src/security/pib/certificate-container.cpp
+    src/security/pib/detail/identity-impl.cpp
+    src/security/pib/detail/key-impl.cpp
+    src/security/pib/identity-container.cpp
+    src/security/pib/identity.cpp
+    src/security/pib/key-container.cpp
+    src/security/pib/key.cpp
+    src/security/pib/pib-memory.cpp
+    src/security/pib/pib.cpp
+    src/security/safe-bag.cpp
+    src/security/security-common.cpp
+    src/security/signature-sha256-with-ecdsa.cpp
+    src/security/signature-sha256-with-rsa.cpp
+    src/security/signing-helpers.cpp
+    src/security/signing-info.cpp
+    src/security/tpm/back-end-file.cpp
+    src/security/tpm/back-end-mem.cpp
+    src/security/tpm/back-end.cpp
+    src/security/tpm/key-handle-mem.cpp
+    src/security/tpm/key-handle.cpp
+    src/security/tpm/tpm.cpp
+    src/security/transform/base64-decode.cpp
+    src/security/transform/base64-encode.cpp
+    src/security/transform/block-cipher.cpp
+    src/security/transform/bool-sink.cpp
+    src/security/transform/buffer-source.cpp
+    src/security/transform/digest-filter.cpp
+    src/security/transform/hex-decode.cpp
+    src/security/transform/hex-encode.cpp
+    src/security/transform/hmac-filter.cpp
+    src/security/transform/private-key.cpp
+    src/security/transform/public-key.cpp
+    src/security/transform/signer-filter.cpp
+    src/security/transform/step-source.cpp
+    src/security/transform/stream-sink.cpp
+    src/security/transform/stream-source.cpp
+    src/security/transform/strip-space.cpp
+    src/security/transform/transform-base.cpp
+    src/security/transform/verifier-filter.cpp
+    src/security/v2/additional-description.cpp
+    src/security/v2/certificate-bundle-fetcher.cpp
+    src/security/v2/certificate-cache.cpp
+    src/security/v2/certificate-fetcher-direct-fetch.cpp
+    src/security/v2/certificate-fetcher-from-network.cpp
+    src/security/v2/certificate-fetcher-offline.cpp
+    src/security/v2/certificate-fetcher.cpp
+    src/security/v2/certificate-storage.cpp
+    src/security/v2/certificate.cpp
+    src/security/v2/key-chain.cpp
+    src/security/v2/trust-anchor-container.cpp
+    src/security/v2/trust-anchor-group.cpp
+    src/security/v2/validation-error.cpp
+    src/security/v2/validation-policy-command-interest.cpp
+    src/security/v2/validation-policy-config.cpp
+    src/security/v2/validation-policy-simple-hierarchy.cpp
+    src/security/v2/validation-policy.cpp
+    src/security/v2/validation-state.cpp
+    src/security/v2/validator-config/checker.cpp
+    src/security/v2/validator-config/filter.cpp
+    src/security/v2/validator-config/name-relation.cpp
+    src/security/v2/validator-config/rule.cpp
+    src/security/v2/validator.cpp
+    src/security/validator-config.cpp
+    src/security/validator-null.cpp
+    src/security/validity-period.cpp
+    src/security/verification-helpers.cpp
+    src/selectors.cpp
+    src/signature-info.cpp
+    src/signature.cpp
+    src/transport/tcp-transport.cpp
+    src/transport/transport.cpp
+    src/transport/unix-transport.cpp
+    src/util/config-file.cpp
+    src/util/dummy-client-face.cpp
+    src/util/indented-stream.cpp
+    src/util/io.cpp
+    src/util/logger.cpp
+    src/util/logging.cpp
+    src/util/notification-subscriber.cpp
+    src/util/random.cpp
+    src/util/regex/regex-backref-manager.cpp
+    src/util/regex/regex-backref-matcher.cpp
+    src/util/regex/regex-component-matcher.cpp
+    src/util/regex/regex-component-set-matcher.cpp
+    src/util/regex/regex-matcher.cpp
+    src/util/regex/regex-pattern-list-matcher.cpp
+    src/util/regex/regex-pseudo-matcher.cpp
+    src/util/regex/regex-repeat-matcher.cpp
+    src/util/regex/regex-top-matcher.cpp
+    src/util/scheduler-scoped-event-id.cpp
+    src/util/scheduler.cpp
+    src/util/segment-fetcher.cpp
+    src/util/sha256.cpp
+    src/util/signal/connection.cpp
+    src/util/signal/scoped-connection.cpp
+    src/util/sqlite3-statement.cpp
+    src/util/string-helper.cpp
+    src/util/time-unit-test-clock.cpp
+    src/util/time.cpp
+    src/net/detail/network-monitor-impl-rtnl.cpp
+    src/security/pib/pib-sqlite3.cpp)
+
+set(ndn-cxx_INCLUDES
+    .
+    src
+    .
+    src)
+    #/usr/include
+    #/usr/include)
+
+#https://stackoverflow.com/questions/44793617/android-ndk-error-asm-types-h-not-found
+#include_directories(${ANDROID_SYSROOT}/usr/include/arm-linux-androideabi)
+
+include_directories(${ndn-cxx_INCLUDES})
+
+add_library(ndn-cxx SHARED ${ndn-cxx_SOURCES})
+target_link_libraries(ndn-cxx) #ssl sqlite3 boost_system pthread boost_filesystem boost_log boost_iostreams boost_program_options boost_chrono boost_thread boost_log boost_log_setup boost_date_time crypto)
+
+#add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tools)
